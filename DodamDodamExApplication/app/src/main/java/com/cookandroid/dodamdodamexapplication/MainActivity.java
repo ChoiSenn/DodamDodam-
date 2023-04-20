@@ -1,8 +1,12 @@
 package com.cookandroid.dodamdodamexapplication;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -10,6 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +33,15 @@ public class MainActivity extends AppCompatActivity {
     //키값(테이블 또는 속성)의 위치 까지는 들어가지는 않은 모습이다.
     private DatabaseReference databaseReference = database.getReference();
 
+    //이메일 비밀번호 로그인 모듈 변수
+    private FirebaseAuth mAuth;
+    //현재 로그인 된 유저 정보를 담을 변수
+    private FirebaseUser currentUser;
+
+    private TextView mTextMessage;
+
     TextView tv1, tv2, tv3;
+    Button btnLogout, btnSetting, btnBoard;
 
     float SVTemp, SVLevel, SVTurb = 0;
     float SettingMaxTemp, SettingMinTemp, SettingMinLevel, SettingMinTurb;
@@ -39,6 +54,27 @@ public class MainActivity extends AppCompatActivity {
         tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
         tv3 = findViewById(R.id.tv3);
+
+        btnLogout = findViewById(R.id.logout);
+        btnSetting = findViewById(R.id.btnSetting);
+        btnBoard = findViewById(R.id.btnBoard);
+
+        mTextMessage = findViewById(R.id.mTextMessage);
+
+        // 로그인 안 되어있다면 메인으로
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        Log.v("d", String.valueOf(currentUser));
+        if(currentUser == null){
+            Intent intent = new Intent(MainActivity.this, FirstActivity.class);
+
+            signOut();
+
+            startActivity(intent);
+        }
+
+        // 회언 정보 가져오기
+        mTextMessage.setText(currentUser.getDisplayName() + "님, 환영합니다! (" + currentUser.getEmail() + ")");
 
         // 센서 수치 설정 값 가져오기
         databaseReference.child("Setting").addValueEventListener(new ValueEventListener() {
@@ -91,6 +127,27 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("MainActivity", String.valueOf(databaseError.toException())); // 에러문 출력
             }
         });
+
+        btnLogout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                signOut();
+            }
+        });
+
+        btnSetting.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                startActivity(new Intent(MainActivity.this, SettingActivity.class));
+            }
+        });
+
+        btnBoard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, BoardActivity.class));
+            }
+        });
     }
 
     void showSensorAlert(String sensor, float value, String how) {  // 센서값이 일정 수치를 벗어나면 경고창
@@ -105,5 +162,13 @@ public class MainActivity extends AppCompatActivity {
                 });
         AlertDialog msgDlg = msgBuilder.create();
         msgDlg.show();
+    }
+
+    // 로그아웃 버튼
+    private void signOut() {
+        FirebaseAuth.getInstance().signOut();
+
+        startActivity(new Intent(MainActivity.this, FirstActivity.class));
+        finish();
     }
 }

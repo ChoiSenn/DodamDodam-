@@ -11,8 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DodamDodamExApplication">
-        <activity
-            android:name=".MainActivity"
+
+        <activity android:name=".FirstActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +20,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+        </activity>
+        
+        <activity android:name=".SignUpActivity" android:exported="true"></activity>
+        <activity android:name=".SettingActivity" android:exported="true"></activity>
+        <activity android:name=".BoardActivity" android:exported="true"></activity>
     </application>
 
 </manifest>
