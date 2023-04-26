@@ -86,8 +86,8 @@ public class WriteActivity extends AppCompatActivity {
 
         mDatabase.child("board").child(uid).push().setValue(board); //push 는 FireBase에서 제공하는 api 로 여러명이 동시에 클라이언트를 이용할때 어떤 값에 대해서 독립을 보장하는 프라이머리 key
 
-        //Intent i = new Intent(WriteActivity.this , BoardActivity.class);
-        //startActivity(i);
+        Intent i = new Intent(WriteActivity.this , BoardActivity.class);
+        startActivity(i);
         finish();
     }
 

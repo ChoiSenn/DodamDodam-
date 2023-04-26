@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Modify_Board"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textView_modify_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_modify_type1"
+        android:text="제목"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <EditText
+        android:id="@+id/editText_modify_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:ems="20"
+        android:hint="제목을 입력하세요"
+        android:layout_below="@id/textView_modify_type1"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/textView_write_title"/>
+
+
+    <TextView
+        android:id="@+id/textView_write_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView_modify_title"
+        android:text="내용"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+    <EditText
+        android:id="@+id/editText_modifyContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_write_content"
+        android:layout_marginTop="20dp"
+        android:inputType="textMultiLine"
+        android:hint="내용을 입력하세요"/>
+
+    <Button
+        android:id="@+id/button_write_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:onClick="button_board_modify_register"
+        android:text="수정하기" />
+
+    <Button
+        android:onClick="button_board_modify_cancle"
+        android:id="@+id/button_board_modify_cancle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="취소하기"
+        android:layout_toLeftOf="@+id/button_write_register"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
