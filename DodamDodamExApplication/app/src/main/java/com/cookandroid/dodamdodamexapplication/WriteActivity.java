@@ -2,22 +2,29 @@ package com.cookandroid.dodamdodamexapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 public class WriteActivity extends AppCompatActivity {
 
@@ -31,8 +38,6 @@ public class WriteActivity extends AppCompatActivity {
     ArrayList<String> writeValue = null;
 
     ArrayAdapter<String> adapter = null;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +91,79 @@ public class WriteActivity extends AppCompatActivity {
 
         mDatabase.child("board").child(uid).push().setValue(board); //push 는 FireBase에서 제공하는 api 로 여러명이 동시에 클라이언트를 이용할때 어떤 값에 대해서 독립을 보장하는 프라이머리 key
 
-        Intent i = new Intent(WriteActivity.this , BoardActivity.class);
-        startActivity(i);
+        board_write_point(); // 랜덤 포인트 지급
+
+        mDatabase.child("user").child(uid).child("point").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.e("t", "6 : " + (int) snapshot.getValue(Integer.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        startActivity(new Intent(WriteActivity.this, BoardActivity.class));
         finish();
+
+    }
+
+    // 게시글 작성 시, 랜덤한 포인트 지급
+    public void board_write_point(){
+        Random random = new Random();
+        int point = random.nextInt(10) + 1;  // 랜덤 포인트
+
+        mDatabase.child("user").child(uid).child("point").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int allPoint = (int) snapshot.getValue(Integer.class);  //저장된 값을 숫자로 받아오고
+                Log.e("t", "1 : " + allPoint + " + " + point);
+
+                allPoint += point;  //숫자를 증가시켜서
+                mDatabase.child("user").child(uid).child("point").setValue(allPoint);  //저장
+
+                mDatabase.child("user").child(uid).child("point").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.e("t", "4 : " + (int) snapshot.getValue(Integer.class));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                Toast.makeText(WriteActivity.this,"게시글 작성으로 포인트" + point + "점을 획득하였습니다!  총 " + allPoint + "점" ,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //Log.e("MainActivity", String.valueOf(databaseError.toException()));
+            }
+
+
+
+        });
+
+        FirebaseUser user = mAuth.getCurrentUser();
+        Log.e("t", "id : " + user.getUid());
+        Log.e("t", "name : " + user.getDisplayName());
+        Log.e("t", "email : " + user.getEmail());
+
+        mDatabase.child("user").child(uid).child("point").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.e("t", "5 : " + (int) snapshot.getValue(Integer.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override

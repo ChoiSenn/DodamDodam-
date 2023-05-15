@@ -143,20 +143,29 @@
             android:id="@+id/btnSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="설정" />
+            android:text="설정"
+            android:layout_weight="1"/>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1"></LinearLayout>
+        <Button
+            android:id="@+id/btnChatbot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="챗봇"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주변 살펴보기"
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/btnBoard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="게시판"
-            android:layout_gravity="right"/>
+            android:layout_weight="1" />
     </LinearLayout>
 
 </LinearLayout>

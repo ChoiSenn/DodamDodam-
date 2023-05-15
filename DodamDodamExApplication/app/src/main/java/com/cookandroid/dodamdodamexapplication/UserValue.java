@@ -3,15 +3,15 @@ package com.cookandroid.dodamdodamexapplication;
 public class UserValue {
 
     public String name;
-    public String firstLunch;
+    public int point;
 
     public UserValue(){
 
     }
 
-    public UserValue(String name , String  firstLunch){
+    public UserValue(String name , int  point){
         this.name = name;
-        this.firstLunch = firstLunch;
+        this.point = point;
     }
 
     public String getName() {
@@ -22,11 +22,11 @@ public class UserValue {
         this.name = name;
     }
 
-    public String getFirstLunch() {
-        return firstLunch;
+    public int getPoint() {
+        return point;
     }
 
-    public void setFirstLunch(String firstLunch) {
-        this.firstLunch = firstLunch;
+    public void setPoint(int point) {
+        this.point = point;
     }
 }

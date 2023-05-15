@@ -45,10 +45,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
 
     TextView tv1, tv2, tv3;
-    Button btnLogout, btnSetting, btnBoard;
+    Button btnLogout, btnSetting, btnBoard, btnMap, btnChatbot;
 
     float SVTemp, SVLevel, SVTurb = 0;
     float SettingMaxTemp, SettingMinTemp, SettingMinLevel, SettingMinTurb;
+    boolean flag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         btnLogout = findViewById(R.id.logout);
         btnSetting = findViewById(R.id.btnSetting);
         btnBoard = findViewById(R.id.btnBoard);
+        btnMap = findViewById(R.id.btnMap);
+        btnChatbot = findViewById(R.id.btnChatbot);
 
         mTextMessage = findViewById(R.id.mTextMessage);
 
@@ -78,7 +81,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // 첫 작동 시, 데이터 세팅
-        DataSet();
+        if (flag){
+            DataSet();
+            Log.e("t", "DataSet 실행 !");
+        }
 
         userClass.setName(currentUser.getDisplayName()); // 전역으로 이 값을 사용하기 위해서 세팅을 해줍니다
 
@@ -90,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 UserValue user = dataSnapshot.child("user").child(currentUser.getUid()).getValue(UserValue.class); // 이는 해당 데이터를 바로 클래스 형태로 넣는 방법입니다 이때 getter는 필수 입니다
 
                 userClass.setName(user.getName()); // 전역으로 이 값을 사용하기 위해서 세팅을 해줍니다
-                userClass.setFirstLunch(user.getFirstLunch());
+                userClass.setPoint(user.getPoint());
             }
 
             @Override
@@ -98,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         mTextMessage.setText(currentUser.getDisplayName() + "님, 환영합니다! (" + currentUser.getEmail() + ")");
 
         // 센서 수치 설정 값 가져오기
@@ -172,6 +179,20 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, BoardActivity.class));
             }
         });
+
+        btnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, MapActivity.class));
+            }
+        });
+
+        btnChatbot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // startActivity(new Intent(MainActivity.this, ChatbotActivity.class));
+            }
+        });
     }
 
     void showSensorAlert(String sensor, float value, String how) {  // 센서값이 일정 수치를 벗어나면 경고창
@@ -214,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
                 //데이터 변경이 감지가 되면 이 함수가 자동으로 콜백이 됩니다 이때 dataSnapashot 는 값을 내려 받을떄 사용함으로 지금은 쓰지 않습니다
 
                 databaseReference.child("user").child(uid).child("name").setValue(nickname);
+                //databaseReference.child("user").child(uid).child("point").setValue(0);
                 //RealTimeDB는 기본적으로 parent , child , value 값으로 이루어져 있습니다 지금은 최초로 로그인한 사람의
                 //색인을 만들고자 지금과 같은 작업을 하는 중입니다 즉 처음 들어오는 사람에게 DB자리를 내준다고 생각하시면됩니다
 
@@ -232,5 +254,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        flag = false;
     }
 }
