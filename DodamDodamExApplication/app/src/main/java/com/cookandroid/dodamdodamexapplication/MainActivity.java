@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cookandroid.dodamdodamexapplication.chatbot.ChatbotActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -190,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         btnChatbot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // startActivity(new Intent(MainActivity.this, ChatbotActivity.class));
+               startActivity(new Intent(MainActivity.this, ChatbotActivity.class));
             }
         });
     }

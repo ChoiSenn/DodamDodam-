@@ -44,6 +44,7 @@
         <activity android:name=".ReadBoardActivity" android:exported="true"></activity>
         <activity android:name=".ModifyBoard" android:exported="true"></activity>
         <activity android:name=".MapActivity" android:exported="true"></activity>
+        <activity android:name=".chatbot.ChatbotActivity" android:exported="true"></activity>
     </application>
 
 </manifest>
