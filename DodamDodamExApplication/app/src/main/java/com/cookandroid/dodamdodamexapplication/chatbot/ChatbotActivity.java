@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cookandroid.dodamdodamexapplication.BuildConfig;
 import com.cookandroid.dodamdodamexapplication.R;
 
 import org.json.JSONArray;
@@ -44,7 +45,7 @@ public class ChatbotActivity extends AppCompatActivity {
     OkHttpClient client = new OkHttpClient();
 
     //secret key 는 openai 홈페이지 가셔서 직접 복사해서 넣으면 됨
-    private static final String MY_SECRET_KEY = "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";
+    private static final String MY_SECRET_KEY = BuildConfig.openai_APIKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
