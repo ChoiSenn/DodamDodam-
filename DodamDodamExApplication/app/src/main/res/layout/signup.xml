@@ -2,16 +2,18 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/background02">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:gravity="center"
         android:textColor="#1F51B7"
-        android:textSize="24sp"
-        android:text="회원가입" />
+        android:textSize="30sp"
+        android:text="회원가입"
+        android:layout_marginTop="180dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,51 +24,57 @@
             android:id="@+id/user_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:gravity="left"
             android:hint="이메일"
             android:minHeight="48dp"
             android:padding="10dp"
-            android:textSize="15dp" />
+            android:textSize="50px"
+            android:background="@drawable/border_layout"/>
 
         <EditText
             android:id="@+id/user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:gravity="left"
             android:hint="이름"
             android:minHeight="48dp"
             android:padding="10dp"
-            android:textSize="15dp" />
+            android:textSize="50px"
+            android:background="@drawable/border_layout"/>
 
         <EditText
             android:id="@+id/user_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:gravity="left"
             android:hint="비밀번호 입력"
             android:minHeight="48dp"
             android:padding="10dp"
-            android:textSize="15dp" />
+            android:textSize="50px"
+            android:background="@drawable/border_layout"/>
 
         <EditText
             android:id="@+id/user_password_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:gravity="left"
             android:hint="비밀번호 확인"
             android:minHeight="48dp"
             android:padding="10dp"
-            android:textSize="15dp" />
+            android:textSize="50px"
+            android:background="@drawable/border_layout"/>
 
         <Button
             android:id="@+id/check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="확인" />
+            android:layout_margin="30dp"
+            android:text="확인"
+            android:textSize="50px"
+            android:background="@drawable/border_button"/>
     </LinearLayout>
 </LinearLayout>
