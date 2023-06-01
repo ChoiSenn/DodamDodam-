@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:760722166232:android:30163b1a7031b4a3ea22ad",
+        "mobilesdk_app_id": "1:760722166232:android:4222ab3aa2912cdfea22ad",
         "android_client_info": {
           "package_name": "com.cookandroid.dodamdodamexapplication"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "760722166232-eegl3ffov7u3c8gmebj4tgmgmfn94qle.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cookandroid.dodamdodamexapplication",
+            "certificate_hash": "e59567f413175497b9533de3f2752ef6f577952b"
+          }
+        },
         {
           "client_id": "760722166232-0f9negaegfnt88i6m022ack33ge56lbc.apps.googleusercontent.com",
           "client_type": 3
