@@ -19,6 +19,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "openai_APIKey", properties['openai_APIKey']
+        buildConfigField "String", "place_APIKey", properties['place_APIKey']
     }
 
     buildTypes {

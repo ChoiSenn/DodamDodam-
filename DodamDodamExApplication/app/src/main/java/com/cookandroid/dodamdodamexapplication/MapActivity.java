@@ -89,6 +89,8 @@ public class MapActivity extends AppCompatActivity
 
     List<Marker> previous_marker = null;
 
+    String place_APIKey = BuildConfig.place_APIKey;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,11 +102,22 @@ public class MapActivity extends AppCompatActivity
 
         previous_marker = new ArrayList<Marker>();
 
-        Button button = (Button)findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button btnAq = (Button)findViewById(R.id.btnAq);
+        Button btnCafe = (Button)findViewById(R.id.btnCafe);
+        Button btnBack = (Button)findViewById(R.id.btnBack);
+
+        // 지도 내 위치 검색 (아쿠아리움, 카페)
+        btnAq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPlaceInformation(currentPosition);
+                showAquarium(currentPosition);
+            }
+        });
+
+        btnCafe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCafe(currentPosition);
             }
         });
 
@@ -128,6 +141,16 @@ public class MapActivity extends AppCompatActivity
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // 뒤로가기
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MapActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -581,6 +604,7 @@ public class MapActivity extends AppCompatActivity
 
             }
         });
+
     }
 
     @Override
@@ -588,7 +612,7 @@ public class MapActivity extends AppCompatActivity
 
     }
 
-    public void showPlaceInformation(LatLng location)
+    public void showAquarium(LatLng location)
     {
         mMap.clear();//지도 클리어
 
@@ -597,11 +621,29 @@ public class MapActivity extends AppCompatActivity
 
         new NRPlaces.Builder()
                 .listener(MapActivity.this)
-                .key("AIzaSyCtJGcSx7B74Pc43XunvYwp02rcIhbWbbk")
+                .key(place_APIKey)
                 .latlng(location.latitude, location.longitude)//현재 위치
                 .radius(500) //500 미터 내에서 검색
                 .type(PlaceType.AQUARIUM) // 아쿠아리움
                 .build()
                 .execute();
     }
+
+    public void showCafe(LatLng location)
+    {
+        mMap.clear();//지도 클리어
+
+        if (previous_marker != null)
+            previous_marker.clear();//지역정보 마커 클리어
+
+        new NRPlaces.Builder()
+                .listener(MapActivity.this)
+                .key(place_APIKey)
+                .latlng(location.latitude, location.longitude)//현재 위치
+                .radius(500) //500 미터 내에서 검색
+                .type(PlaceType.CAFE) // 카페
+                .build()
+                .execute();
+    }
+
 }
