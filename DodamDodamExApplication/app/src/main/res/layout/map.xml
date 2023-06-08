@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:id="@+id/layout_main"
     android:orientation="vertical"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity"
+    android:background="@drawable/mbackground">
 
     <fragment
         android:id="@+id/map"
@@ -43,7 +44,7 @@
             android:background="@drawable/border_button"/>
 
         <LinearLayout
-            android:layout_width="30에"
+            android:layout_width="30dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
             android:orientation="horizontal"></LinearLayout>
