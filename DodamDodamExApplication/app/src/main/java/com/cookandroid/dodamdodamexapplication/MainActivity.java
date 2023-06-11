@@ -3,6 +3,7 @@ package com.cookandroid.dodamdodamexapplication;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         Log.v("d", String.valueOf(currentUser));
+
         if(currentUser == null){
             Intent intent = new Intent(MainActivity.this, FirstActivity.class);
 
@@ -98,7 +100,11 @@ public class MainActivity extends AppCompatActivity {
 
                 userClass.setName(user.getName()); // 전역으로 이 값을 사용하기 위해서 세팅을 해줍니다
                 userClass.setPoint(user.getPoint());
+
+                Log.e("t", "!!!!!!!!!!!!!!!!!!!point set!!!!!!!!!!!!!!  =>  " + userClass.getPoint());
+                databaseReference.child("user").child(currentUser.getUid()).child("point").setValue(user.getPoint());
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -220,6 +226,8 @@ public class MainActivity extends AppCompatActivity {
 
     //최초 로그인시 DB 값 세팅
     public void DataSet(){
+        Log.e("t", "!!!!Dataset!!!!");
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser(); // 이는 현재 로그인한 사람의 정보를 가지고 옵니다
 
@@ -236,11 +244,12 @@ public class MainActivity extends AppCompatActivity {
                 //데이터 변경이 감지가 되면 이 함수가 자동으로 콜백이 됩니다 이때 dataSnapashot 는 값을 내려 받을떄 사용함으로 지금은 쓰지 않습니다
 
                 databaseReference.child("user").child(uid).child("name").setValue(nickname);
-                //databaseReference.child("user").child(uid).child("point").setValue(0);
                 //RealTimeDB는 기본적으로 parent , child , value 값으로 이루어져 있습니다 지금은 최초로 로그인한 사람의
                 //색인을 만들고자 지금과 같은 작업을 하는 중입니다 즉 처음 들어오는 사람에게 DB자리를 내준다고 생각하시면됩니다
 
                 UserValue user = dataSnapshot.child("user").child(uid).getValue(UserValue.class); // 이는 해당 데이터를 바로 클래스 형태로 넣는 방법입니다 이때 getter는 필수 입니다
+                Log.e("t", "point : " + user.getPoint());
+                //databaseReference.child("user").child(uid).child("point").setValue(user.getPoint());
                 // nickName.setText(user.getName()); //그래서 그 값을 가져오는 것이고
 
                 //userClass.setName(user.getName()); // 전역으로 이 값을 사용하기 위해서 세팅을 해줍니다

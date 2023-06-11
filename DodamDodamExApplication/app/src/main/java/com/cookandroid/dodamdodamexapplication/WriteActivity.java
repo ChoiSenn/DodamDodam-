@@ -39,6 +39,12 @@ public class WriteActivity extends AppCompatActivity {
 
     ArrayAdapter<String> adapter = null;
 
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = database.getReference();
+    //현재 로그인 된 유저 정보를 담을 변수
+    public FirebaseUser currentUser;
+    public final static UserValue userClass = new UserValue();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +54,26 @@ public class WriteActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = mAuth.getCurrentUser();
         uid = user.getUid();
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
+        // 회언 정보 가져오기
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                UserValue user = dataSnapshot.child("user").child(currentUser.getUid()).getValue(UserValue.class); // 이는 해당 데이터를 바로 클래스 형태로 넣는 방법입니다 이때 getter는 필수 입니다
+
+                userClass.setName(user.getName()); // 전역으로 이 값을 사용하기 위해서 세팅을 해줍니다
+                userClass.setPoint(user.getPoint());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         write_title = (EditText) findViewById(R.id.editText_write_title);
         write_content = (EditText) findViewById(R.id.editText_writeContent);
@@ -114,6 +140,8 @@ public class WriteActivity extends AppCompatActivity {
     public void board_write_point(){
         Random random = new Random();
         int point = random.nextInt(10) + 1;  // 랜덤 포인트
+
+        Log.e("t", uid + "  " + userClass.getName() + "  " + userClass.getPoint());
 
         mDatabase.child("user").child(uid).child("point").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

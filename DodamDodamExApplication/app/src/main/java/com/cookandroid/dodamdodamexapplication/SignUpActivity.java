@@ -131,7 +131,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     //데이터 변경이 감지가 되면 이 함수가 자동으로 콜백이 됩니다 이때 dataSnapashot 는 값을 내려 받을떄 사용함으로 지금은 쓰지 않습니다
 
                                     //databaseReference.child("user").child(uid).child("name").setValue(nickname);
-                                    //databaseReference.child("user").child(uid).child("point").setValue(0);
+                                    databaseReference.child("user").child(uid).child("point").setValue(0);
                                     //RealTimeDB는 기본적으로 parent , child , value 값으로 이루어져 있습니다 지금은 최초로 로그인한 사람의
                                     //색인을 만들고자 지금과 같은 작업을 하는 중입니다 즉 처음 들어오는 사람에게 DB자리를 내준다고 생각하시면됩니다
 
