@@ -3,25 +3,19 @@ package com.cookandroid.dodamdodamexapplication;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
+import android.os.Handler;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cookandroid.dodamdodamexapplication.chatbot.ChatbotActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
     public FirebaseUser currentUser;
     public final static UserValue userClass = new UserValue();
 
-    private TextView mTextMessage;
+    private TextView mTextMessage, mTextMessage2;
 
     TextView tv1, tv2, tv3;
-    Button btnLogout, btnSetting, btnBoard, btnMap, btnChatbot;
+    ImageButton btnLogout, btnSetting, btnBoard, btnMap, btnChatbot;
 
     float SVTemp, SVLevel, SVTurb = 0;
     float SettingMaxTemp, SettingMinTemp, SettingMinLevel, SettingMinTurb;
@@ -69,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         btnChatbot = findViewById(R.id.btnChatbot);
 
         mTextMessage = findViewById(R.id.mTextMessage);
+        mTextMessage2 = findViewById(R.id.mTextMessage2);
 
         // 로그인 안 되어있다면 메인으로
         mAuth = FirebaseAuth.getInstance();
@@ -91,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
         userClass.setName(currentUser.getDisplayName()); // 전역으로 이 값을 사용하기 위해서 세팅을 해줍니다
 
+        final int[] userPoint = new int[1];
+
         // 회언 정보 가져오기
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -101,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 userClass.setName(user.getName()); // 전역으로 이 값을 사용하기 위해서 세팅을 해줍니다
                 userClass.setPoint(user.getPoint());
 
-                Log.e("t", "!!!!!!!!!!!!!!!!!!!point set!!!!!!!!!!!!!!  =>  " + userClass.getPoint());
                 databaseReference.child("user").child(currentUser.getUid()).child("point").setValue(user.getPoint());
+                userPoint[0] = user.getPoint();
             }
 
 
@@ -112,7 +109,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mTextMessage.setText(currentUser.getDisplayName() + "님, 환영합니다! (" + currentUser.getEmail() + ")");
+        // 데이터베이스 가져오는 시간차 때문에 2초의 텀을 둔 뒤 실행
+        new Handler().postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                mTextMessage.setText(currentUser.getDisplayName() + "님, 환영합니다!");
+                mTextMessage2.setText(currentUser.getEmail() + "\n보유 중인 포인트 : " + userPoint[0] + "p");
+            }
+        }, 2000);
 
         // 센서 수치 설정 값 가져오기
         databaseReference.child("Setting").addValueEventListener(new ValueEventListener() {
