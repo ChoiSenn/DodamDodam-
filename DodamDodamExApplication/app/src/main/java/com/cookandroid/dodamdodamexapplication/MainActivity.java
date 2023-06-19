@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cookandroid.dodamdodamexapplication.chatbot.ChatbotActivity;
+import com.dinuscxj.progressbar.CircleProgressBar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
+
+    CircleProgressBar circleProgressBarTemp, circleProgressBarTurb;
 
     // 파이어베이스 데이터베이스 연동
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -64,6 +68,23 @@ public class MainActivity extends AppCompatActivity {
 
         mTextMessage = findViewById(R.id.mTextMessage);
         mTextMessage2 = findViewById(R.id.mTextMessage2);
+
+        ProgressBar progressLevel = (ProgressBar) findViewById(R.id.vertical_progressbar);
+        progressLevel.setProgress(0);
+
+        circleProgressBarTemp=findViewById(R.id.temp_circlebar);
+        circleProgressBarTemp.setProgress(0);  // 프로그레스바 기본값
+        circleProgressBarTemp.setProgressFormatter((progress, max) -> {  // 프로그레스 바 포맷
+            final String DEFAULT_PATTERN = "%d°C";
+            return String.format(DEFAULT_PATTERN, (int) ((float) progress / (float) max * 100));
+        });
+
+        circleProgressBarTurb=findViewById(R.id.turb_circlebar);
+        circleProgressBarTurb.setProgress(0);  // 프로그레스바 기본값
+        circleProgressBarTurb.setProgressFormatter((progress, max) -> {  // 프로그레스 바 포맷
+            final String DEFAULT_PATTERN = "%d";
+            return String.format(DEFAULT_PATTERN, (int) ((float) progress / (float) max * 100));
+        });
 
         // 로그인 안 되어있다면 메인으로
         mAuth = FirebaseAuth.getInstance();
@@ -144,15 +165,20 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 SeosorValue seosorValue = dataSnapshot.getValue(SeosorValue.class);
 
-                //각각의 값 받아오기. 함수들은 SeosorValue.class에서 지정한것
+                // 각각의 값 받아오기. 함수들은 SeosorValue.class에서 지정한것
                 SVTemp = seosorValue.gettemperature();
                 SVLevel = seosorValue.getwaterLevel();
                 SVTurb = seosorValue.getturbidity();
 
-                //텍스트뷰에 받아온 문자열 대입하기
+                // 텍스트뷰에 받아온 문자열 대입하기
                 tv1.setText(Float.toString(SVTemp));
                 tv2.setText(Float.toString(SVLevel));
                 tv3.setText(Float.toString(SVTurb));
+
+                // 프로그레스 바 설정
+                progressLevel.setProgress((int) SVLevel);
+                circleProgressBarTemp.setProgress((int) SVTemp);
+                circleProgressBarTurb.setProgress((int) SVTurb);
 
                 // 센서 값이 일정 수치 밖으로 나가면 경고창
                 if(SVTemp > SettingMaxTemp){
