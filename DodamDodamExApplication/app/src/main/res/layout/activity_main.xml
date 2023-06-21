@@ -53,13 +53,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         android:layout_weight="100"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -71,7 +71,7 @@
                     android:id="@+id/vertical_progressbar"
                     style="@style/Widget.ProgressBar.Vertical"
                     android:layout_width="50dip"
-                    android:layout_height="451dip"
+                    android:layout_height="480dip"
                     android:layout_marginLeft="60dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="60dp"
@@ -112,7 +112,8 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="15dp">
 
                 <com.dinuscxj.progressbar.CircleProgressBar
                     android:id="@+id/temp_circlebar"
@@ -173,7 +174,8 @@
                     app:progress_stroke_cap="round"
                     app:progress_stroke_width="20dp "
                     app:progress_text_size="50sp"
-                    app:style="solid_line" />
+                    app:style="solid_line"
+                    android:layout_marginTop="30dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

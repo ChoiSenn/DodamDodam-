@@ -11,6 +11,7 @@
         <entry key="..\:/Project/App/DodamDodamEx/DodamDodamExApplication/app/src/main/res/drawable/map.xml" value="0.367" />
         <entry key="..\:/Project/App/DodamDodamEx/DodamDodamExApplication/app/src/main/res/drawable/rounded_board.xml" value="0.367" />
         <entry key="..\:/Project/App/DodamDodamEx/DodamDodamExApplication/app/src/main/res/drawable/rounded_corner.xml" value="0.2195" />
+        <entry key="..\:/Project/App/DodamDodamEx/DodamDodamExApplication/app/src/main/res/drawable/settings.xml" value="0.367" />
         <entry key="..\:/Project/App/DodamDodamEx/DodamDodamExApplication/app/src/main/res/drawable/vertical_progress_bar.xml" value="0.367" />
         <entry key="..\:/Project/App/DodamDodamEx/DodamDodamExApplication/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Project/App/DodamDodamEx/DodamDodamExApplication/app/src/main/res/layout/board.xml" value="0.20018115942028986" />
@@ -22,6 +23,7 @@
         <entry key="..\:/Project/App/DodamDodamEx/DodamDodamExApplication/app/src/main/res/layout/map.xml" value="0.36614583333333334" />
         <entry key="..\:/Project/App/DodamDodamEx/DodamDodamExApplication/app/src/main/res/layout/read_board.xml" value="0.33" />
         <entry key="..\:/Project/App/DodamDodamEx/DodamDodamExApplication/app/src/main/res/layout/rounded_corner.xml" value="0.17603850050658562" />
+        <entry key="..\:/Project/App/DodamDodamEx/DodamDodamExApplication/app/src/main/res/layout/setting.xml" value="0.36614583333333334" />
         <entry key="..\:/Project/App/DodamDodamEx/DodamDodamExApplication/app/src/main/res/layout/signup.xml" value="0.36614583333333334" />
       </map>
     </option>
