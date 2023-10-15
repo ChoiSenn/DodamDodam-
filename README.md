@@ -1,6 +1,10 @@
 # DodamDodam (v2.0.0)
 202251509 최세은
 
+DodamDodam version 1
+- 소켓 통신 및 아두이노 코드 : https://github.com/Bamgo/CS_DodamDodam
+- 도담도담 챗봇 코드 : https://github.com/Bamgo/DodamChatbot
+
 # CheckList
 
 ## 6주차
